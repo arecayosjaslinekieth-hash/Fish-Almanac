@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fish Almanac PH - Beginner's Guide 🎣</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* ENHANCED Wave Background */
+        .waves {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 120%; /* Extended height for better coverage */
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 60%;
+            background-repeat: repeat-x;
+            background-position: 0 bottom;
+            transform-origin: center bottom;
+            will-change: transform;
+        }
+
+        .wave1 { 
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSI2MHB4IiB2aWV3Qm94PSIwIDAgMTAwIDYwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CgogIDxwYXRoIGQ9Ik0wLDM1IEw1MCwtNSBMODAsMzAgTDEwMCwxNSBMNTAsNTUgTDAsMzUgWiIgZmlsbD0icmdiYSg0NCwgMTY4LCAyMzQsIDAuNikiPjwvcGF0aD4KPC9zdmc+'); 
+            animation: wave1 12s linear infinite;
+        }
+        .wave2 { 
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSI2MHB4IiB2aWV3Qm94PSIwIDAgMTAwIDYwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CgogIDxwYXRoIGQ9Ik0wLDQ1IEw0MCwxNSBMNzUsNDAgTDk1LDIwIEwxMDAsMzUgTDUwLDYwIFoiIGZpbGw9InJnYmEoODAsIDE5NCwgMjU1LCAwLjQpIj48L3BhdGg+Cjwvc3ZnPg=='); 
+            animation: wave2 15s linear infinite reverse;
+        }
+        .wave3 { 
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSI2MHBxIiB2aWV3Qm94PSIwIDAgMTAwIDYwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CgogIDxwYXRoIGQ9Ik0wLDI1IEw0NSwtMTAgTDkwLDIwIEw2MCw1NSBMMTUwLDM1IEw5MCw0NSBaIiBmaWxsPSJyZ2JhKDEwNCwgMjA5LCAyMzQsIDAuMykiPjwvcGF0aD4KPC9zdmc+'); 
+            animation: wave3 18s ease-in-out infinite;
+        }
+        .wave4 { 
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSI2MHB4IiB2aWV3Qm94PSIwIDAgMTAwIDYwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CgogIDxwYXRoIGQ9Ik0wLDQwIEwzMCwxMCBMNzAsMzggTDk1LDE4IEwxMDAsMjggTDY1LDU4IFoiIGZpbGw9InJnYmEoMTQ4LCAyMjAsIDI0OCwgMC4yKSI+PC9wYXRoPgo8L3N2Zz4='); 
+            animation: wave4 20s linear infinite;
+        }
+        .wave5 { 
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSI4MHB4IiB2aWV3Qm94PSIwIDAgMTAwIDgwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CgogIDxwYXRoIGQ9Ik0wLDYwIEwyMCwyNSBMNTAsNjAgTDgwLDMwIEwxMDAsNTUgTDUwLDgwIFoiIGZpbGw9InJnYmEoMjU1LCAyNTUsIDI1NSwgMC4xKSI+PC9wYXRoPgo8L3N2Zz4='); 
+            animation: wave5 25s ease-in-out infinite reverse;
+            opacity: 0.6;
+        }
+
+        /* ENHANCED Wave Animations */
+        @keyframes wave1 {0%{transform:translateX(0)translateZ(0)scaleY(1);}50%{transform:translateX(-25%)translateZ(0)scaleY(0.6);}100%{transform:translateX(-50%)translateZ(0)scaleY(1);}}
+        @keyframes wave2 {0%{transform:translateX(0)translateZ(0)scaleY(1);}50%{transform:translateX(-25%)translateZ(0)scaleY(0.65);}100%{transform:translateX(-50%)translateZ(0)scaleY(1);}}
+        @keyframes wave3 {0%{transform:translateX(0)translateZ(0)scaleY(1);}25%{transform:translateX(-12.5%)translateZ(0)scaleY(0.7);}50%{transform:translateX(-25%)translateZ(0)scaleY(0.55);}75%{transform:translateX(-37.5%)translateZ(0)scaleY(0.7);}100%{transform:translateX(-50%)translateZ(0)scaleY(1);}}
+        @keyframes wave4 {0%{transform:translateX(0)translateZ(0)scaleY(1);}50%{transform:translateX(-25%)translateZ(0)scaleY(0.6);}100%{transform:translateX(-50%)translateZ(0)scaleY(1);}}
+        @keyframes wave5 {0%{transform:translateX(0)translateZ(0)scaleY(1);}33%{transform:translateX(-16.5%)translateZ(0)scaleY(0.8);}66%{transform:translateX(-33%)translateZ(0)scaleY(0.75);}100%{transform:translateX(-50%)translateZ(0)scaleY(1);}}
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            color: #059669;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #2d3748;
+            font-weight: 600;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.7);
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: white;
+            background: linear-gradient(45deg, #059669, #047857);
+            border-color: #059669;
+            transform: scale(1.05);
+        }
+
+        /* Main Content - FIXED HEIGHT */
+        .main-content {
+            height: calc(100vh - 90px); /* Adjusted for navbar */
+            padding-top: 100px; /* MOVED DOWNWARD - more space from navbar */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 60px 20px; /* INCREASED top padding */
+            display: none;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Fish Cards - MOVED DOWN with better spacing */
+        .fish-grid, .ph-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem; /* Increased gap */
+            max-width: 1200px;
+            width: 100%;
+            margin-top: 2rem; /* ADDED top margin */
+        }
+
+        .ph-grid {
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+
+        .fish-card, .ph-fish {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem; /* Increased padding */
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.4s ease;
+            border-top: 4px solid #059669;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1rem; /* Extra bottom margin */
+        }
+
+        .ph-fish { border-top-color: #ef4444; }
+
+        .fish-card:hover, .ph-fish:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(5,150,105,0.4);
+        }
+
+        /* REAL FISH PHOTO */
+        .fish-photo {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .fish-card h3, .ph-fish h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+        }
+
+        .fish-card p, .ph-fish p {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        /* Fish Detail Modal - ENHANCED WITH BIG PHOTO */
+        .fish-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+        }
+
+        .fish-detail {
+            background: rgba(255,255,255,0.98);
+            max-width: 500px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            animation: modalSlide 0.4s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        @keyframes modalSlide {
+            from { opacity: 0; transform: scale(0.8) translateY(50px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* BIG FISH PHOTO IN MODAL */
+        .modal-fish-photo {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .fish-detail h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: #059669;
+            margin-bottom: 1rem;
+        }
+
+        .fish-detail .info {
+            text-align: left;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #64748b;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(100,116,139,0.2);
+            color: #1e293b;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 3rem; /* Increased bottom margin */
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            font-family: 'Bebas Neue', sans-serif;
+            width: 100%;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            color: white;
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(45deg, #059669, #047857);
+            color: white;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: rgba(30, 41, 59, 0.9);
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-content { padding-top: 110px; }
+            .section { padding: 80px 20px 40px; }
+            .nav-menu { gap: 0.5rem; }
+            .nav-link { padding: 0.6rem 1rem; font-size: 0.9rem; }
+            .hero-title { font-size: 2.5rem; }
+            .fish-grid, .ph-grid { 
+                grid-template-columns: 1fr; 
+                gap: 1.5rem; 
+                margin-top: 1.5rem;
+            }
+            .fish-detail { padding: 1.5rem; margin: 1rem; }
+            .fish-photo { height: 120px; }
+            .section-title { margin-bottom: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ENHANCED Waves -->
+    <div class="waves">
+        <div class="wave wave1"></div>
+        <div class="wave wave2"></div>
+        <div class="wave wave3"></div>
+        <div class="wave wave4"></div>
+        <div class="wave wave5"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-fish"></i>
+                <span>Fish Almanac PH</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active" data-tab="home">🏠 Home</a></li>
+                <li><a href="#" class="nav-link" data-tab="freshwater">🌊 Freshwater</a></li>
+                <li><a href="#" class="nav-link" data-tab="saltwater">🌊 Saltwater</a></li>
+                <li><a href="#" class="nav-link" data-tab="ph-fish">🇵🇭 PH Favorites</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Home -->
+        <div id="home" class="section active">
+            <div class="hero-content">
+                <h1 class="hero-title">Fish Almanac PH</h1>
+                <p style="font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.95;">
+                    Click any <strong>FISH PHOTO</strong> below to see details!<br>
+                    Real photos + fishing tips for Philippines! 📸🎣
+                </p>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+                    <a href="#" class="btn" data-tab="ph-fish">🇵🇭 PH Favorites</a>
+                    <a href="#" class="btn" data-tab="freshwater">Freshwater Fish</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Freshwater -->
+        <div id="freshwater" class="section">
+            <h2 class="section-title"><i class="fas fa-tint"></i> Freshwater Fish</h2>
+            <div class="fish-grid">
+                <div class="fish-card" data-fish="tilapia">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Til%C3%A1pia_ou_Sarotherodon_niloticus_2.jpg/800px-Til%C3%A1pia_ou_Sarotherodon_niloticus_2.jpg" alt="Tilapia" class="fish-photo">
+                    <h3>Tilapia</h3>
+                    <p>Beginner favorite!</p>
+                </div>
+                <div class="fish-card" data-fish="hito">
+                    <img src="https://static.vecteezy.com/system/resources/previews/065/421/217/non_2x/catfish-with-distinctive-whiskers-and-streamlined-body-is-displayed-on-a-clean-surface-for-observation-and-study-png.png" alt="Hito" class="fish-photo">
+                    <h3>Hito (Catfish)</h3>
+                    <p>Night fishing!</p>
+                </div>
+                <div class="fish-card" data-fish="carp">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Cyprinus_carpio_2008_G1_%28cropped%29.jpg/800px-Cyprinus_carpio_2008_G1_%28cropped%29.jpg" alt="Carp" class="fish-photo">
+                    <h3>Carp</h3>
+                    <p>Corn bait lover</p>
+                </div>
+                <div class="fish-card" data-fish="dalag">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Talusog_in_Baao.JPG/800px-Talusog_in_Baao.JPG" alt="Dalag" class="fish-photo">
+                    <h3>Dalag (Mudfish)</h3>
+                    <p>Rice field king</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Saltwater -->
+        <div id="saltwater" class="section">
+            <h2 class="section-title"><i class="fas fa-water"></i> Saltwater Fish</h2>
+            <div class="fish-grid">
+                <div class="fish-card" data-fish="bangus">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Milkfish_%28Chanos_chanos%29_locally_called_%27bangus%27_in_a_Philippine_market.jpg/800px-Milkfish_%28Chanos_chanos%29_locally_called_%27bangus%27_in_a_Philippine_market.jpg" alt="Bangus" class="fish-photo">
+                    <h3>Bangus</h3>
+                    <p>Brackish/coastal</p>
+                </div>
+                <div class="fish-card" data-fish="mayamaya">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Paddletail_melb_aquarium.jpg/800px-Paddletail_melb_aquarium.jpg" alt="Maya-maya" class="fish-photo">
+                    <h3>Maya-maya</h3>
+                    <p>Shore fishing</p>
+                </div>
+                <div class="fish-card" data-fish="lapu">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Baltimore_Aquarium_-_Mycteroperca_microlepis_-_05.jpg/800px-Baltimore_Aquarium_-_Mycteroperca_microlepis_-_05.jpg" alt="Lapu-lapu" class="fish-photo">
+                    <h3>Lapu-lapu</h3>
+                    <p>Reef monster</p>
+                </div>
+                <div class="fish-card" data-fish="tanigue">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Scomber_japonicus_%28Matsuwasaba%29.jpg/800px-Scomber_japonicus_%28Matsuwasaba%29.jpg" alt="Tanigue" class="fish-photo">
+                    <h3>Tanigue</h3>
+                    <p>Fast mackerel</p>
+                </div>
+                <div class="fish-card" data-fish="tuna">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Bluefin-big.jpg/800px-Bluefin-big.jpg" alt="Tuna" class="fish-photo">
+                    <h3>Tuna</h3>
+                    <p>Offshore giant</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PH Favorites -->
+        <div id="ph-fish" class="section">
+            <h2 class="section-title"><i class="fas fa-flag"></i> PH Favorites 🇵🇭</h2>
+            <div class="ph-grid">
+                <div class="ph-fish" data-fish="bangus-ph">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Milkfish_%28Chanos_chanos%29_locally_called_%27bangus%27_in_a_Philippine_market.jpg/800px-Milkfish_%28Chanos_chanos%29_locally_called_%27bangus%27_in_a_Philippine_market.jpg" alt="Bangus" class="fish-photo">
+                    <h3>Bangus</h3>
+                    <p>King of PH!</p>
+                </div>
+                <div class="ph-fish" data-fish="hito-ph">
+                    <img src="https://static.vecteezy.com/system/resources/previews/065/421/217/non_2x/catfish-with-distinctive-whiskers-and-streamlined-body-is-displayed-on-a-clean-surface-for-observation-and-study-png.png" alt="Hito" class="fish-photo">
+                    <h3>Hito</h3>
+                    <p>Night king</p>
+                </div>
+                <div class="ph-fish" data-fish="tilapia-ph">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Til%C3%A1pia_ou_Sarotherodon_niloticus_2.jpg/800px-Til%C3%A1pia_ou_Sarotherodon_niloticus_2.jpg" alt="Tilapia" class="fish-photo">
+                    <h3>Tilapia</h3>
+                    <p>Beginner fish</p>
+                </div>
+                <div class="ph-fish" data-fish="lapu-ph">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Baltimore_Aquarium_-_Mycteroperca_microlepis_-_05.jpg/800px-Baltimore_Aquarium_-_Mycteroperca_microlepis_-_05.jpg" alt="Lapu-lapu" class="fish-photo">
+                    <h3>Lapu-lapu</h3>
+                    <p>Dream catch</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fish Detail Modal -->
+    <div id="fishModal" class="fish-modal">
+        <div class="fish-detail" id="fishDetail">
+            <button class="close-btn" onclick="closeFishModal()">&times;</button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p><i class="fas fa-fish"></i> Click fish photos for details! 📸🎣🇵🇭</p>
+    </footer>
+
+    <script>
+        // Tab switching
+        document.querySelectorAll('[data-tab]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+                document.getElementById(this.dataset.tab).classList.add('active');
+                closeFishModal();
+            });
+        });
+
+        // Fish card click → Show details with REAL PHOTO
+        document.querySelectorAll('.fish-card, .ph-fish').forEach(card => {
+            card.addEventListener('click', function() {
+                const fishId = this.dataset.fish;
+                showFishDetail(fishId);
+            });
+        });
+
+        // Fish details data with REAL PHOTOS
+        const fishData = {
+            tilapia: { 
+                photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Til%C3%A1pia_ou_Sarotherodon_niloticus_2.jpg/800px-Til%C3%A1pia_ou_Sarotherodon_niloticus_2.jpg',
+                name: 'Tilapia', 
+                info: '<strong>Habitat:</strong> Lakes, ponds, rivers<br><strong>Bait:</strong> Bread, corn, worms, dough balls<br><strong>Size:</strong> 0.5-2kg<br><strong>Tips:</strong> Very easy for beginners! Fish near structures. Best in morning/evening.' 
+            },
+            hito: { 
+                photo: 'https://static.vecteezy.com/system/resources/previews/065/421/217/non_2x/catfish-with-distinctive-whiskers-and-streamlined-body-is-displayed-on-a-clean-surface-for-observation-and-study-png.png',
+                name: 'Hito (Catfish)', 
+                info: '<strong>Habitat:</strong> Muddy rivers, canals<br><strong>Bait:</strong> Shrimp, worms, chicken liver<br><strong>Size:</strong> 1-5kg<br><strong>Tips:</strong> Night fishing king! Strong fighter. Use stout rod.' 
+            },
+            carp: { 
+                photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Cyprinus_carpio_2008_G1_%28cropped%29.jpg/800px-Cyprinus_carpio_2008_G1_%28cropped%29.jpg',
+                name: 'Carp', 
+                info: '<strong>Habitat:</strong> Lakes, slow rivers<br><strong>Bait:</strong> Corn, dough balls, boilies<br><strong>Size:</strong> 2-10kg<br><strong>Tips:</strong> Patient fishing. Loves bottom baits.' 
+            },
+            bangus: { 
+                photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Milkfish_%28Chanos_chanos%29_locally_called_%27bangus%27_in_a_Philippine_market.jpg/800px-Milkfish_%28Chanos_chanos%29_locally_called_%27bangus%27_in_a_Philippine_market.jpg',
+                name: 'Bangus (Milkfish)', 
+                info: '<strong>Habitat:</strong> Brackish water, coastal areas<br><strong>Bait:</strong> Algae, small shrimp, bread<br><strong>Size:</strong> 1-3kg<br><strong>Tips:</strong> Very common in PH! Fast runs. Saltwater/brackish zones.' 
+            },
+            dalag: { 
+                photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Talusog_in_Baao.JPG/800px-Talusog_in_Baao.JPG',
+                name: 'Dalag (Mudfish)', 
+                info: '<strong>Habitat:</strong> Swamps, rice fields<br><strong>Bait:</strong> Small fish, frogs<br><strong>Size:</strong> 0.5-2kg<br><strong>Tips:</strong> Aggressive! Loves murky water.' 
+            },
+            mayamaya: { 
+                photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Paddletail_melb_aquarium.jpg/800px-Paddletail_melb_aquarium.jpg',
+                name: 'Maya-maya (Snapper)', 
+                info: '<strong>Habitat:</strong> Rocky shores, reefs<br><strong>Bait:</strong> Squid, small fish<br><strong>Size:</strong> 1-5kg<br><strong>Tips:</strong> Shore casting. Great eating!' 
+            },
+            lapu: { 
+                photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Baltimore_Aquarium_-_Mycteroperca_microlepis_-_05.jpg/800px-Baltimore_Aquarium_-_Mycteroperca_microlepis_-_05.jpg',
+                name: 'Lapu-lapu (Grouper)', 
+                info: '<strong>Habitat:</strong> Coral reefs, caves<br><strong>Bait:</strong> Live baitfish<br><strong>Size:</strong> 2-20kg+<br><strong>Tips:</strong> PH dream fish! Very strong.' 
+            },
+            tanigue: { 
+                photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Scomber_japonicus_%28Matsuwasaba%29.jpg/800px-Scomber_japonicus_%28Matsuwasaba%29.jpg',
+                name: 'Tanigue (Mackerel)', 
+                info: '<strong>Habitat:</strong> Coastal waters<br><strong>Bait:</strong> Spoons, small fish<br><strong>Size:</strong> 1-4kg<br><strong>Tips:</strong> Super fast! Trolling works.' 
+            },
+            tuna: { 
+                photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Bluefin-big.jpg/800px-Bluefin-big.jpg',
+                name: 'Tuna', 
+                info: '<strong>Habitat:</strong> Offshore deep water<br><strong>Bait:</strong> Lures, live bait<br><strong>Size:</strong> 10-100kg+<br><strong>Tips:</strong> Boat needed. Epic fights!' 
+            },
+            'bangus-ph': { 
+                photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Milkfish_%28Chanos_chanos%29_locally_called_%27bangus%27_in_a_Philippine_market.jpg/800px-Milkfish_%28Chanos_chanos%29_locally_called_%27bangus%27_in_a_Philippine_market.jpg',
+                name: 'Bangus', 
+                info: '<strong>PH King!</strong> Found everywhere from fish ponds to sea. Use green algae or shrimp. Very fast when hooked!' 
+            },
+            'hito-ph': { 
+                photo: 'https://static.vecteezy.com/system/resources/previews/065/421/217/non_2x/catfish-with-distinctive-whiskers-and-streamlined-body-is-displayed-on-a-clean-surface-for-observation-and-study-png.png',
+                name: 'Hito', 
+                info: '<strong>Night Fishing!</strong> Muddy bottoms. Smells bait from far. Use glow sticks at night.' 
+            },
+            'tilapia-ph': { 
+                photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Til%C3%A1pia_ou_Sarotherodon_niloticus_2.jpg/800px-Til%C3%A1pia_ou_Sarotherodon_niloticus_2.jpg',
+                name: 'Tilapia', 
+                info: '<strong>Beginner Fish!</strong> Every lake has them. Bread balls = instant bites.' 
+            },
+            'lapu-ph': { 
+                photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Baltimore_Aquarium_-_Mycteroperca_microlepis_-_05.jpg/800px-Baltimore_Aquarium_-_Mycteroperca_microlepis_-_05.jpg',
+                name: 'Lapu-lapu', 
+                info: '<strong>Dream Fish!</strong> Lives in holes. Drop live bait down. Market price = $$$' 
+            }
+        };
+
+        function showFishDetail(fishId) {
+            const fish = fishData[fishId];
+            if (fish) {
+                document.getElementById('modalContent').innerHTML = `
+                    <img src="${fish.photo}" alt="${fish.name}" class="modal-fish-photo">
+                    <h2>${fish.name}</h2>
+                    <div class="info">${fish.info}</div>
+                    <button class="btn" onclick="closeFishModal()">Back to Fish</button>
+                `;
+                document.getElementById('fishModal').style.display = 'flex';
+            }
+        }
+
+        function closeFishModal() {
+            document.getElementById('fishModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('fishModal').addEventListener('click', function(e) {
+            if (e.target === this) closeFishModal();
+        });
+    </script>
+</body>
+</html>
